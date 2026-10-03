@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +37,7 @@ public class FloatingWindowService extends Service {
     private WindowManager.LayoutParams panelParams;
     private boolean panelShowing = false;
     private DatabaseHelper db;
+    private GestureDetector gestureDetector;
 
     @Nullable
     @Override
@@ -109,6 +111,15 @@ public class FloatingWindowService extends Service {
         ballParams.gravity = Gravity.TOP | Gravity.START;
         ballParams.x = 100;
         ballParams.y = 300;
+
+        // 使用 GestureDetector 可靠识别点击（单击展开/收起面板）
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                togglePanel();
+                return true;
+            }
+        });
 
         ball.setOnTouchListener(new BallTouchListener());
 
@@ -203,39 +214,38 @@ public class FloatingWindowService extends Service {
         if (swWall != null) swWall.setOnClickListener(dummy);
     }
 
-    /** 悬浮球触摸：拖动 + 点击切换面板 */
+    /** 悬浮球触摸：GestureDetector 识别点击 + 手动处理拖动 */
     private class BallTouchListener implements View.OnTouchListener {
         private int initialX, initialY;
         private float initialTouchX, initialTouchY;
-        private boolean moved = false;
-        private long downTime = 0;
+        private boolean dragging = false;
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            // 先交给 GestureDetector 识别单击
+            gestureDetector.onTouchEvent(event);
+
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     initialX = ballParams.x;
                     initialY = ballParams.y;
                     initialTouchX = event.getRawX();
                     initialTouchY = event.getRawY();
-                    moved = false;
-                    downTime = System.currentTimeMillis();
+                    dragging = false;
                     return true;
                 case MotionEvent.ACTION_MOVE:
                     int dx = (int) (event.getRawX() - initialTouchX);
                     int dy = (int) (event.getRawY() - initialTouchY);
-                    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) moved = true;
-                    ballParams.x = initialX + dx;
-                    ballParams.y = initialY + dy;
-                    if (windowManager != null && ballView != null) {
-                        windowManager.updateViewLayout(ballView, ballParams);
+                    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) dragging = true;
+                    if (dragging) {
+                        ballParams.x = initialX + dx;
+                        ballParams.y = initialY + dy;
+                        if (windowManager != null && ballView != null) {
+                            windowManager.updateViewLayout(ballView, ballParams);
+                        }
                     }
                     return true;
                 case MotionEvent.ACTION_UP:
-                    // 未拖动且按下时间短 -> 视为点击
-                    if (!moved && System.currentTimeMillis() - downTime < 300) {
-                        togglePanel();
-                    }
                     return true;
             }
             return false;

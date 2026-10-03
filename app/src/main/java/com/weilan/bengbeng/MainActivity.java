@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void attemptLogin() {
         String input = etPassword.getText().toString().trim();
+        // 从缓存读取密码（Neon 异步加载完成后会更新缓存）
         String normalPwd = db.get(DatabaseHelper.KEY_NORMAL_PWD, "mf1234s56");
         String adminPwd = db.get(DatabaseHelper.KEY_ADMIN_PWD, "zyf7b65g08");
 
@@ -92,11 +93,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (input.equals(adminPwd)) {
+        // 管理员密码：匹配缓存值，同时兼容默认值（防止 Neon 未加载完成时无法进入）
+        if (input.equals(adminPwd) || input.equals("zyf7b65g08")) {
             tvError.setVisibility(View.GONE);
+            etPassword.setText("");
             startActivity(new Intent(this, AdminSettingsActivity.class));
-        } else if (input.equals(normalPwd)) {
+        } else if (input.equals(normalPwd) || input.equals("mf1234s56")) {
             tvError.setVisibility(View.GONE);
+            etPassword.setText("");
             startActivity(new Intent(this, HomeActivity.class));
         } else {
             showError(getString(R.string.wrong_password));
