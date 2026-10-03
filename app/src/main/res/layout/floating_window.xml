@@ -7,18 +7,19 @@
     android:background="@drawable/floating_panel_bg"
     android:clipToOutline="true">
 
-    <!-- 背景图 -->
+    <!-- 背景图（用户提供），作为玻璃底层透出 -->
     <ImageView
+        android:id="@+id/float_glass_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_main" />
 
-    <!-- 暗色遮罩，保证文字可读 -->
+    <!-- 液态玻璃遮罩：半透明 + 渐变高光，保证文字可读 -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#CC1C1C1E" />
+        android:background="@drawable/floating_panel_overlay" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +50,11 @@
                 android:text="蔚蓝绷绷"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:shadowColor="#80000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="3" />
 
             <TextView
                 android:id="@+id/btn_float_close"
@@ -61,7 +66,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <!-- 功能列表 -->
+        <!-- 功能列表（玻璃卡片内嵌） -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +86,11 @@
                     android:layout_weight="1"
                     android:text="上帝视角"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/fsw_god"
@@ -110,13 +119,19 @@
                     android:layout_weight="1"
                     android:text="无限生命"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/fsw_hp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:checked="true"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#34C759" />
             </LinearLayout>
 
             <View
@@ -137,12 +152,18 @@
                     android:layout_weight="1"
                     android:text="无后坐力"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/fsw_recoil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#34C759" />
             </LinearLayout>
 
             <View
@@ -163,12 +184,18 @@
                     android:layout_weight="1"
                     android:text="加速奔跑"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/fsw_speed"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#34C759" />
             </LinearLayout>
 
             <View
@@ -189,12 +216,18 @@
                     android:layout_weight="1"
                     android:text="穿墙透视"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/fsw_wall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#34C759" />
             </LinearLayout>
         </LinearLayout>
 
@@ -217,7 +250,11 @@
                 android:layout_height="wrap_content"
                 android:text="已注入 · 运行中"
                 android:textColor="#34C759"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:shadowColor="#80000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
         </LinearLayout>
 
     </LinearLayout>

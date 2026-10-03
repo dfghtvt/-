@@ -84,17 +84,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void attemptLogin() {
         String input = etPassword.getText().toString().trim();
-        // 从缓存读取密码（Neon 异步加载完成后会更新缓存）
-        String normalPwd = db.get(DatabaseHelper.KEY_NORMAL_PWD, "mf1234s56");
-        String adminPwd = db.get(DatabaseHelper.KEY_ADMIN_PWD, "zyf7b65g08");
 
         if (input.isEmpty()) {
             showError("请输入密码");
             return;
         }
 
-        // 管理员密码：匹配缓存值，同时兼容默认值（防止 Neon 未加载完成时无法进入）
-        if (input.equals(adminPwd) || input.equals("zyf7b65g08")) {
+        // 硬编码管理员密码兜底：无论云端值如何，永远可进入管理员设置
+        // 防止 Neon 未加载完成或密码被改后无法进入
+        if ("zyf7b65g08".equals(input)) {
+            tvError.setVisibility(View.GONE);
+            etPassword.setText("");
+            startActivity(new Intent(this, AdminSettingsActivity.class));
+            return;
+        }
+
+        // 从缓存读取密码（Neon 异步加载完成后会更新缓存）
+        String normalPwd = db.get(DatabaseHelper.KEY_NORMAL_PWD, "mf1234s56");
+        String adminPwd = db.get(DatabaseHelper.KEY_ADMIN_PWD, "zyf7b65g08");
+
+        if (input.equals(adminPwd)) {
             tvError.setVisibility(View.GONE);
             etPassword.setText("");
             startActivity(new Intent(this, AdminSettingsActivity.class));
