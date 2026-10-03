@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">蔚蓝绷绷</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="enter">进入</string>
+    <string name="start">开启</string>
+    <string name="stop">关闭</string>
+    <string name="admin_settings">管理员设置</string>
+    <string name="save">保存设置</string>
+    <string name="wrong_password">密码错误</string>
+    <string name="floating_title">蔚蓝绷绷</string>
+</resources>

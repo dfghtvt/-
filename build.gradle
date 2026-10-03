@@ -1,0 +1,22 @@
+// Top-level build file for 蔚蓝绷绷
+// Compatible with AIDE PRO 2.9.1 and Gradle 8.5
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.4'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.buildDir
+}
