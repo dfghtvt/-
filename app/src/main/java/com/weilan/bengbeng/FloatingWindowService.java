@@ -107,6 +107,9 @@ public class FloatingWindowService extends Service {
         // 从数据库读取设置并应用到悬浮窗
         applyDbSettings();
 
+        // Neon 数据异步加载完成后，刷新悬浮窗显示
+        db.setOnLoadedListener(this::applyDbSettings);
+
         // 关闭按钮
         TextView btnClose = floatView.findViewById(R.id.btn_float_close);
         btnClose.setOnClickListener(v -> stopSelf());

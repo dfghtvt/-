@@ -53,6 +53,9 @@ public class AdminSettingsActivity extends AppCompatActivity {
         // 从数据库加载当前设置
         loadSettings();
 
+        // Neon 数据异步加载完成后，刷新界面为云端最新值
+        db.setOnLoadedListener(this::loadSettings);
+
         // 颜色选择
         setupColorPickers();
 
