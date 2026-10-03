@@ -122,17 +122,19 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     private void highlightColor(String color) {
         int[] ids = {R.id.color_blue, R.id.color_cyan, R.id.color_pink, R.id.color_green};
+        int[] colors = {R.color.ios_blue, R.color.accent_cyan, R.color.accent_pink, R.color.ios_green};
         String[] tags = {"blue", "cyan", "pink", "green"};
         for (int i = 0; i < ids.length; i++) {
             View v = findViewById(ids[i]);
             if (v != null) {
+                // 每次都新建 GradientDrawable，避免 ColorDrawable 强转崩溃
+                GradientDrawable d = new GradientDrawable();
+                d.setShape(GradientDrawable.OVAL);
+                d.setColor(getResources().getColor(colors[i]));
                 if (tags[i].equals(color)) {
-                    GradientDrawable d = (GradientDrawable) v.getBackground();
-                    d.setStroke(5, Color.WHITE);
-                } else {
-                    GradientDrawable d = (GradientDrawable) v.getBackground();
-                    d.setStroke(0, Color.TRANSPARENT);
+                    d.setStroke(6, Color.WHITE);
                 }
+                v.setBackground(d);
             }
         }
     }

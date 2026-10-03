@@ -112,7 +112,7 @@ public class FloatingWindowService extends Service {
         ballParams.x = 100;
         ballParams.y = 300;
 
-        // 触摸监听挂在根视图上，确保点击/拖动可靠
+        // 悬浮球本身就是根 ImageView，触摸监听直接挂在上面
         ballView.setOnTouchListener(new BallTouchListener());
 
         windowManager.addView(ballView, ballParams);

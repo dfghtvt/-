@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 悬浮球：液态玻璃质感的圆形应用图标 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="60dp"
-    android:layout_height="60dp">
-
-    <ImageView
-        android:id="@+id/float_ball"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher"
-        android:scaleType="centerCrop"
-        android:background="@drawable/ball_circle_bg"
-        android:padding="2dp"
-        android:contentDescription="悬浮球" />
-
-    <!-- 玻璃高光 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/ball_highlight" />
-</FrameLayout>
+<!-- 悬浮球：简洁圆形应用图标，48dp 不挡视野 -->
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/float_ball"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:src="@mipmap/ic_launcher"
+    android:scaleType="centerCrop"
+    android:background="@drawable/ball_circle_bg"
+    android:contentDescription="悬浮球" />
